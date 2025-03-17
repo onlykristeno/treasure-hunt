@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt Game 🏴‍☠️</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Treasure Hunt Game 🏴‍☠️</h1>
+        <p>Guess the location where the treasure is hidden!</p>
+
+        <p>The possible locations are: beach dock cave forest hill mountain valley river desert oasis village or castle</p>
+
+        <div id="game-info">
+            <label for="location">Choose a location from the list:</label>
+            <input type="text" id="location" placeholder="e.g. beach, cave, forest, etc." />
+
+            <button id="guess-btn">Guess</button>
+        </div>
+
+        <p id="feedback"></p>
+        <p id="game-status"></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#guess-btn').click(function() {
+                const guess = $('#location').val().toLowerCase();
+                const treasureLocation = "{{ treasure_location }}";
+
+                $.ajax({
+                    url: '/guess',
+                    type: 'POST',
+                    data: {
+                        guess: guess,
+                        treasure_location: treasureLocation
+                    },
+                    success: function(response) {
+                        $('#feedback').text(response.feedback);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

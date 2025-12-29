@@ -41,17 +41,22 @@ stick = False
 # and we roll again until we start with a number thats not 6
 
 def game(letter, sit1, sit2, name1, name2, score1, score2, totalscore1, totalscore2):
-    while (letter<= 6):
-        while (sit1==False or sit2 == False):
-            rollCount = 1
+    while (letter< 6):
+        #Record how many rolls in this round
+        rollCount = 1
+        #Should stop scores from cumulating over rounds
+        score1=0
+        score2=0
+        
+        while (True):
             dice = rollDice()
             if(dice<6):
                 print("This roll is a " + str(dice))
-                #Record how many rolls in this round
                 rollCount += 1
             elif(rollCount == 1 and dice==6):
                 #Should restart the inner loop
                 print(".....Started on 6, restarting round.....")
+                #Keyword that restarts loop
                 continue
             else:
                 rollCount += 1
@@ -103,15 +108,6 @@ def game(letter, sit1, sit2, name1, name2, score1, score2, totalscore1, totalsco
                 sit1 = False
                 sit2 = False
                 break
-            #Moving onto next round if both players sit down
-            elif(sit1==True and sit2==True):
-                letter += 1
-                print("Moving onto round " + str(letter) + "/6 !")
-                #Make everyone stand up again!
-                sit1 = False
-                sit2 = False
-                break
-                
 
             #Here, we ASK the player, "hey u wanna sit now? But only ask this if they're standing for the round"
             if(sit1==False):
@@ -129,13 +125,34 @@ def game(letter, sit1, sit2, name1, name2, score1, score2, totalscore1, totalsco
                 sit2 = True
             else:
                 sit2 = False
-
-        print("🜲 Game over! 🜲") 
+            
+            #Moving onto next round if both players sit down
+            if(sit1==True and sit2==True):
+                letter += 1
+                print("Moving onto round " + str(letter) + "/6 !")
+                #Make everyone stand up again!
+                sit1 = False
+                sit2 = False
+                break
+        
+        #After round ends, add score for that round to a list
         totalscore1.append(score1)
         totalscore2.append(score2)
+        
+    print("......🜲 Game over! 🜲....")
+    print("....Here are the scores!.....")
+    print(name1 + ": " + str(totalscore1))
+    print(name2 + ": " + str(totalscore2))
             
     superscore1 = sum(totalscore1)
     superscore2 = sum(totalscore2)
+
+    if superscore1 > superscore2:
+        print("⭐ Winner is: " + name1 + " ⭐")
+    elif superscore2 > superscore1:
+        print("⭐ Winner is: " + name2 + " ⭐")
+    else:
+        print("⭐TIE!⭐")
 
     return [superscore1, superscore2]
 

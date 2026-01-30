@@ -3,47 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treasure Hunt Game 🏴‍☠️</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>GREED</title>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Welcome to the Treasure Hunt Game 🏴‍☠️</h1>
-        <p>Guess the location where the treasure is hidden!</p>
+    <h1>Welcome to GREED</h1>
 
-        <p>The possible locations are: beach dock cave forest hill mountain valley river desert oasis village or castle</p>
-
-        <div id="game-info">
-            <label for="location">Choose a location from the list:</label>
-            <input type="text" id="location" placeholder="e.g. beach, cave, forest, etc." />
-
-            <button id="guess-btn">Guess</button>
-        </div>
-
-        <p id="feedback"></p>
-        <p id="game-status"></p>
+    <div id="game-status">
+        <p>Current round: <span id="round">1</span></p>
+        <p>Current score: <span id="round">0</span></p>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#guess-btn').click(function() {
-                const guess = $('#location').val().toLowerCase();
-                const treasureLocation = "{{ treasure_location }}";
+    <!--I want to have the little rich guy on my game kind of like on the Athena Sleepover site that will walk you 
+    through the game and talk in the cute little voice.... Obviously a later development though-->
 
-                $.ajax({
-                    url: '/guess',
-                    type: 'POST',
-                    data: {
-                        guess: guess,
-                        treasure_location: treasureLocation
-                    },
-                    success: function(response) {
-                        $('#feedback').text(response.feedback);
-                    }
-                });
-            });
-        });
-    </script>
+    <!-- GAME MASTER AREA -->
+    <div id="game-master">
+        <div id="gm-text-box">
+            <p id="gm-text"></p>
+        </div>
+        <img id="gm-avatar" src="gm-idle.png" alt="Game Master">
+        <img id="gm-dice" class="hidden" src="dice-1.png">
+    </div>
+
+    <div id="dice-area">
+        <!-- Dice will appear here -->
+         <p id="result">Dice: —</p>
+    </div>
+
+    <div id="controls">
+        <button id="roll-btn">Roll Dice</button>
+    </div>
+
+    <!--Broooooo how do i even do thisss-->
+
+    <!--Ok boom here is the strat, I'm gonna refresh on HTML/CSS-->
+    <div id="message"></div>
+
+     <!-- MAIN GAME AREA -->
+  <main id="game-area">
+
+    <!-- Dice (main screen) -->
+    <div id="main-dice-area">
+      <img id="main-dice" src="dice-1.png">
+    </div>
+
+    <!-- GREED BOARD -->
+    <div id="board">
+      <!-- columns here (same as before) -->
+    </div>
+
+  </main>
+  
+  <!-- PLAYER CONTROLS -->
+  <nav id="controls">
+    <button id="roll-btn">Roll</button>
+    <button id="sit-btn">Sit</button>
+    <button id="stand-btn">Stand</button>
+  </nav>
+  
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
